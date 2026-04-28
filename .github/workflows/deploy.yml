@@ -53,6 +53,11 @@ jobs:
             goos: windows
             goarch: amd64
             artifact_name: gen-arith4-exercise-windows-amd64.exe
+          - os: windows-latest
+            arch: arm64
+            goos: windows
+            goarch: arm64
+            artifact_name: gen-arith4-exercise-windows-arm64.exe
 
     steps:
       - name: Checkout code
@@ -75,7 +80,10 @@ jobs:
           GOARCH: ${{ matrix.goarch }}
           CGO_ENABLED: 0
         run: |
-          go build -v -o ${{ matrix.artifact_name }} -ldflags="-s -w" main.go
+          go build -v -o ${{ matrix.artifact_name }} \
+            -ldflags="-s -w -extldflags '-static'" \
+            -trimpath \
+            main.go
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -126,7 +134,7 @@ jobs:
             ### 包含的平台
             - Linux (amd64, arm64)
             - macOS (amd64, arm64)
-            - Windows (amd64)
+            - Windows (amd64, arm64)
           draft: false
           prerelease: false
         env:

@@ -23,11 +23,38 @@
 
 ## 安装
 
-### 前置要求
+### 方式一：下载预编译二进制文件（推荐）
+
+从 [GitHub Releases](https://github.com/deep2code/gen-arith4-exercise/releases) 页面下载适合您平台的最新版本：
+
+| 平台 | 架构 | 文件名 |
+|------|------|--------|
+| Linux | amd64 (x86_64) | `gen-arith4-exercise-linux-amd64` |
+| Linux | arm64 (ARM) | `gen-arith4-exercise-linux-arm64` |
+| macOS | amd64 (Intel) | `gen-arith4-exercise-darwin-amd64` |
+| macOS | arm64 (Apple Silicon) | `gen-arith4-exercise-darwin-arm64` |
+| Windows | amd64 (x86_64) | `gen-arith4-exercise-windows-amd64.exe` |
+| Windows | arm64 (ARM) | `gen-arith4-exercise-windows-arm64.exe` |
+
+**Linux/macOS 使用方法：**
+```bash
+# 下载后赋予执行权限
+chmod +x gen-arith4-exercise-<platform>-<arch>
+
+# 运行
+./gen-arith4-exercise-<platform>-<arch>
+```
+
+**Windows 使用方法：**
+直接双击 `.exe` 文件或在命令行中运行。
+
+### 方式二：从源码编译
+
+#### 前置要求
 
 - Go 1.26.2 或更高版本
 
-### 编译安装
+#### 编译步骤
 
 ```bash
 # 克隆仓库
@@ -66,15 +93,63 @@ go run main.go
 | `-count` | 生成的练习题数量 | 228 (45×5+3) |
 | `-filename` | 输出文件名 | `arth4-YYYYMMDD-HHMMSS.html` |
 
+### 使用场景示例
+
+#### 1. 日常练习（推荐数量）
+```bash
+# 生成适合一次练习的题目数量
+./gen-arith4-exercise -count 50 -filename daily_practice.html
+```
+
+#### 2. 周练习
+```bash
+# 生成一周的练习量
+./gen-arith4-exercise -count 200 -filename weekly_practice.html
+```
+
+#### 3. 专项训练
+```bash
+# 生成少量题目用于快速测试
+./gen-arith4-exercise -count 20 -filename quick_test.html
+```
+
+#### 4. 批量生成
+```bash
+# 为不同日期生成不同的练习文件
+./gen-arith4-exercise -count 100 -filename 2024_01_practice.html
+./gen-arith4-exercise -count 100 -filename 2024_02_practice.html
+```
+
 ### 示例输出
 
 生成的 HTML 文件将包含类似以下的练习题：
 
-```
+![四则运算练习题示例](arth4.jpg)
+
+```text
 12 ➕ 34 ➖ 5 🟰 ___
 ___ ➗ 8 X 3 🟰 24
 (15 ➖ 7) ➕ 20 🟰 ___
 ```
+
+### 打印建议
+
+生成的 HTML 文件已经过打印优化，您可以：
+
+1. **直接打印**：用浏览器打开 HTML 文件，按 `Ctrl+P` (Windows/Linux) 或 `Cmd+P` (macOS) 打印
+2. **保存为 PDF**：在打印对话框中选择“另存为 PDF”
+3. **调整设置**：
+   - 纸张大小：A4
+   - 边距：默认或最小
+   - 缩放：100%
+   - 背景图形：可选（建议开启以获得最佳效果）
+
+### 使用技巧
+
+- 💡 **随机性**：每次运行都会生成不同的题目，可以多次运行获取不同练习
+- 💡 **填空位置**：每道题随机隐藏一个数字（操作数或结果），增加思考难度
+- 💡 **难度控制**：所有题目保证结果为正整数且不超过 200，适合小学阶段
+- 💡 **两列布局**：HTML 采用两列显示，节省纸张空间
 
 ## 技术实现
 
