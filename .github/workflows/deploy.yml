@@ -16,9 +16,9 @@ on:
   workflow_dispatch:
     inputs:
       create_release:
-        description: "是否创建 Release"
+        description: "创建 Release"
         required: false
-        default: false
+        default: true
         type: boolean
 
 jobs:
@@ -79,11 +79,8 @@ jobs:
           GOOS: ${{ matrix.goos }}
           GOARCH: ${{ matrix.goarch }}
           CGO_ENABLED: 0
-        run: |
-          go build -v -o ${{ matrix.artifact_name }} \
-            -ldflags="-s -w -extldflags '-static'" \
-            -trimpath \
-            main.go
+        run: go build -v -o "${{ matrix.artifact_name }}" -ldflags="-s -w -extldflags
+          '-static'" -trimpath main.go
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
